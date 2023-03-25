@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ChakraProvider } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { match } from "ts-pattern";
+import Editor from "./editor/Editor";
+import en from "./l10n/en.json";
+import { Router } from "./router";
+
+import "./App.css";
+
+const queryClient = new QueryClient();
+
+i18n.use(initReactI18next).init({
+  resources: {
+    en: {
+      translation: en,
+    },
+  },
+  lng: "en",
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
+  const route = Router.useRoute(["Home", "Editor", "UserList", "UserDetail"]);
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        {match(route)
+          .with({ name: "Home" }, () => (
+            <div>
+              <a href={Router.Editor()}>Editor</a>
+            </div>
+          ))
+          .with({ name: "Editor" }, () => <Editor />)
+          .with({ name: "UserList" }, () => <div>User list</div>)
+          .with({ name: "UserDetail" }, ({ params }) => (
+            <div>{params.userId}</div>
+          ))
+          .otherwise(() => (
+            <div>404</div>
+          ))}
+      </ChakraProvider>
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;

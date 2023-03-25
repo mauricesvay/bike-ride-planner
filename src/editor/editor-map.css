@@ -1,0 +1,10 @@
+.custom-marker {
+  width: 24px;
+  height: 24px;
+  background: black;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
