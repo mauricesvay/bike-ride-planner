@@ -14,7 +14,7 @@ const POSITION_CLASSES = {
 
 export function CenterButton({ waypoints }: { waypoints: Waypoint[] }) {
   const parentMap = useMap();
-  const buttonRef = useRef();
+  const buttonRef = useRef<HTMLButtonElement>();
 
   const handleCenterMap: MouseEventHandler<HTMLButtonElement> = () => {
     // Compute bounds
