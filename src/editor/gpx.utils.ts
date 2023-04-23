@@ -3,6 +3,7 @@ import { Point } from "gpx-builder/dist/builder/BaseBuilder/models";
 import gpxParser from "gpxparser";
 import { Waypoint } from "./Waypoint.types";
 import { BrouterResponse } from "./use-brouter-route";
+import { LatLng } from "leaflet";
 
 export function getGpx(
   waypoints: Waypoint[],
@@ -42,7 +43,7 @@ export function parseGpx(gpxString: string) {
     latlng: {
       lat,
       lng: lon,
-    },
+    } as LatLng,
   }));
 
   return { waypoints };

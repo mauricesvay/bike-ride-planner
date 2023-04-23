@@ -31,9 +31,9 @@ function Editor() {
 
   // Stats
   const properties = data?.features[0].properties;
-  const duration = properties?.["total-time"];
-  const distance = properties?.["track-length"];
-  const ascend = properties?.["filtered ascend"];
+  const duration = parseFloat(properties?.["total-time"] ?? "0");
+  const distance = parseFloat(properties?.["track-length"] ?? "0");
+  const ascend = parseFloat(properties?.["filtered ascend"] ?? "0");
 
   // Export
   const handleExport = () => {
