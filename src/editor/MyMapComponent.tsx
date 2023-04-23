@@ -1,4 +1,4 @@
-import { LatLng } from "leaflet";
+import { LatLng, LeafletMouseEvent } from "leaflet";
 import { useMapEvents } from "react-leaflet";
 
 export function MyMapComponent({
@@ -7,7 +7,7 @@ export function MyMapComponent({
   addMarker: (latlng: LatLng) => void;
 }) {
   useMapEvents({
-    click: ({ latlng }: { latlng: LatLng }) => {
+    click: ({ latlng }: LeafletMouseEvent) => {
       addMarker(latlng);
     },
   });

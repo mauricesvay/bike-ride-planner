@@ -17,7 +17,7 @@ Getting started:
 Map:
 
 - [ ] More layer options (satellite, etc.)
-- [ ] Recenter map
+- [x] Recenter map
 - [ ] POIs overlay? (water fountains, toilets, etc.)
 - [ ] Statshunters tiles overlay?
 - [ ] Strava heatmap overlay?

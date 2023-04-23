@@ -8,10 +8,11 @@ import {
   Popup,
   TileLayer,
 } from "react-leaflet";
-import "./editor-map.css";
+import { CenterButton } from "./CenterButton";
 import { MyMapComponent } from "./MyMapComponent";
-import { usePopup } from "./use-popup";
 import { Waypoint } from "./Waypoint.types";
+import "./editor-map.css";
+import { usePopup } from "./use-popup";
 
 interface EditorMapProps {
   waypoints: Waypoint[];
@@ -109,6 +110,7 @@ export function EditorMap({
       {lines.length > 0 ? (
         <Polyline positions={lines[0]} pathOptions={{ color: "red" }} />
       ) : null}
+      <CenterButton waypoints={waypoints} />
     </MapContainer>
   );
 }
