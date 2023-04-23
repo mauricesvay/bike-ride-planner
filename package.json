@@ -21,6 +21,7 @@
     "file-saver": "^2.0.5",
     "framer-motion": "^10.9.1",
     "gpx-builder": "^5.2.1",
+    "gpxparser": "^3.0.8",
     "i18next": "^22.4.13",
     "leaflet": "^1.9.3",
     "numeral": "^2.0.6",

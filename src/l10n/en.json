@@ -1,5 +1,6 @@
 {
   "editor.stats.distance": "Distance",
   "editor.stats.duration": "Duration",
-  "editor.stats.ascend": "Ascend"
+  "editor.stats.ascend": "Ascend",
+  "editor.import.nowaypoints": "The GPX file does not contain waypoints"
 }

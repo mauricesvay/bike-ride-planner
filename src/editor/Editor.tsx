@@ -1,16 +1,16 @@
-import { DownloadIcon } from "@chakra-ui/icons";
 import { Box, Grid, GridItem } from "@chakra-ui/layout";
 import { Button, Flex, Heading } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
-import { BaseBuilder, buildGPX } from "gpx-builder";
-import { Point } from "gpx-builder/dist/builder/BaseBuilder/models";
+import { t } from "i18next";
 import { useState } from "react";
 import { EditorMap } from "./EditorMap";
+import { ImportButton } from "./ImportButton";
 import { ProfileSelector } from "./ProfileSelector";
 import { Stats } from "./Stats";
+import { Waypoints } from "./Waypoints";
+import { getGpx, parseGpx } from "./gpx.utils";
 import { BrouterProfile, useBrouterRoute } from "./use-brouter-route";
 import { useWaypoints } from "./use-waypoints";
-import { Waypoints } from "./Waypoints";
 
 function Editor() {
   const [profile, setProfile] = useState<BrouterProfile>("safety");
@@ -35,32 +35,33 @@ function Editor() {
   const distance = properties?.["track-length"];
   const ascend = properties?.["filtered ascend"];
 
+  // Export
   const handleExport = () => {
-    const now = Date.now();
-    const points: Point[] = waypoints.map((waypoint) => {
-      const point = new Point(waypoint.latlng.lat, waypoint.latlng.lng, {
-        ele: 0, // @TODO: set correct elevation
+    if (data) {
+      const gpxString = getGpx(waypoints, data);
+      let blob = new Blob([gpxString], {
+        type: "application/gpx+xml;charset=utf-8",
       });
-      return point;
-    });
-    const segmentPoints: Point[] = data.features[0].geometry.coordinates.map(
-      ([lng, lat, ele]: any, i: number) => {
-        const time = data.features[0].properties.times[i];
-        const point = new Point(lat, lng, {
-          ele: ele,
-          time: new Date(now + time * 1000),
-        });
-        return point;
-      }
-    );
-    const gpxData = new BaseBuilder();
-    gpxData.setWayPoints(points);
-    gpxData.setSegmentPoints(segmentPoints);
-    const gpxString = buildGPX(gpxData.toObject());
-    let blob = new Blob([gpxString], {
-      type: "application/gpx+xml;charset=utf-8",
-    });
-    saveAs(blob, "export.gpx");
+      saveAs(blob, "export.gpx");
+    }
+  };
+
+  // Import
+  const handleImport = (files: FileList) => {
+    if (files.length === 1) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.addEventListener("load", (event) => {
+        const gpxText = String(event.target?.result) ?? "";
+        const { waypoints: nextWaypoints } = parseGpx(gpxText);
+        if (nextWaypoints.length === 0) {
+          alert(t("editor.import.nowaypoints"));
+        } else {
+          setWaypoints(nextWaypoints);
+        }
+      });
+      reader.readAsText(file);
+    }
   };
 
   return (
@@ -75,9 +76,10 @@ function Editor() {
       <GridItem area={"header"} borderBottomWidth="1px" borderColor="gray.200">
         <Flex justify="space-between" p={2} align="center">
           <Heading size="md">Bike Ride Planner</Heading>
-          <Button leftIcon={<DownloadIcon />} onClick={() => handleExport()}>
-            Download GPX
-          </Button>
+          <Flex gap={2}>
+            <ImportButton onFileSelected={handleImport} />
+            <Button onClick={() => handleExport()}>Export GPX</Button>
+          </Flex>
         </Flex>
       </GridItem>
       <GridItem p="2" area={"nav"}>
