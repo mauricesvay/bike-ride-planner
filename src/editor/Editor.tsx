@@ -1,16 +1,18 @@
 import { Grid, GridItem } from "@chakra-ui/layout";
-import { Button, Flex, Heading } from "@chakra-ui/react";
+import { Button, Flex, Heading, useTheme } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
 import { t } from "i18next";
 import { useState } from "react";
 import { EditorMap } from "./EditorMap";
+import { getGpx, parseGpx } from "./gpx.utils";
 import { ImportButton } from "./ImportButton";
 import { Sidepanel } from "./Sidepanel/Sidepanel";
-import { getGpx, parseGpx } from "./gpx.utils";
 import { BrouterProfile, useBrouterRoute } from "./use-brouter-route";
 import { useWaypoints } from "./use-waypoints";
 
 function Editor() {
+  const theme = useTheme();
+  const borderColor = theme.semanticTokens.colors["chakra-border-color"];
   const [profile, setProfile] = useState<BrouterProfile>("safety");
   const {
     waypoints,
@@ -71,7 +73,11 @@ function Editor() {
       gridTemplateRows={"0fr 1fr"}
       gridTemplateColumns={"320px 1fr"}
     >
-      <GridItem area={"header"} borderBottomWidth="1px" borderColor="gray.200">
+      <GridItem
+        area={"header"}
+        borderBottomWidth="1px"
+        borderColor={borderColor}
+      >
         <Flex justify="space-between" p={2} align="center">
           <Heading size="md">Bike Ride Planner</Heading>
           <Flex gap={2}>

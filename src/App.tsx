@@ -6,6 +6,7 @@ import { match } from "ts-pattern";
 import Editor from "./editor/Editor";
 import en from "./l10n/en.json";
 import { Router } from "./router";
+import theme from "./theme";
 
 import "./App.css";
 
@@ -29,7 +30,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         {match(route)
           .with({ name: "Home" }, () => (
             <div>
