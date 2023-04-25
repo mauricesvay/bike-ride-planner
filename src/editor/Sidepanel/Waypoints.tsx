@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { arrayMoveImmutable } from "array-move";
 import SortableList, { SortableItem, SortableKnob } from "react-easy-sort";
-import { Waypoint } from "./Waypoint.types";
-import { getPlaceholder } from "./waypoint.utils";
+import { Waypoint } from "../Waypoint.types";
+import { getPlaceholder } from "../waypoint.utils";
 
 export function Waypoints({
   waypoints,

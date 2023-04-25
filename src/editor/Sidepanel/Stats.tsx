@@ -3,17 +3,19 @@ import numeral from "numeral";
 import { useTranslation } from "react-i18next";
 
 export function Stats({
-  length,
-  time,
+  distance,
+  duration,
   ascend,
 }: {
-  length?: number;
-  time?: number;
+  distance?: number;
+  duration?: number;
   ascend?: number;
 }) {
   const { t } = useTranslation();
-  const formattedDistance = length ? numeral(length / 1000).format("0.0") : "-";
-  const formattedTime = time ? numeral(time).format("00:00:00") : "-";
+  const formattedDistance = distance
+    ? numeral(distance / 1000).format("0.0")
+    : "-";
+  const formattedTime = duration ? numeral(duration).format("00:00:00") : "-";
   const formattedAscend = ascend ? numeral(ascend).format("0") : "-";
   return (
     <Stack

@@ -1,13 +1,11 @@
-import { Box, Grid, GridItem } from "@chakra-ui/layout";
+import { Grid, GridItem } from "@chakra-ui/layout";
 import { Button, Flex, Heading } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
 import { t } from "i18next";
 import { useState } from "react";
 import { EditorMap } from "./EditorMap";
 import { ImportButton } from "./ImportButton";
-import { ProfileSelector } from "./ProfileSelector";
-import { Stats } from "./Stats";
-import { Waypoints } from "./Waypoints";
+import { Sidepanel } from "./Sidepanel/Sidepanel";
 import { getGpx, parseGpx } from "./gpx.utils";
 import { BrouterProfile, useBrouterRoute } from "./use-brouter-route";
 import { useWaypoints } from "./use-waypoints";
@@ -82,18 +80,18 @@ function Editor() {
           </Flex>
         </Flex>
       </GridItem>
-      <GridItem p="2" area={"nav"}>
-        <ProfileSelector profile={profile} onProfileChange={setProfile} />
-        <Box mt={2}>
-          <Waypoints
-            waypoints={waypoints}
-            setItems={setWaypoints}
-            updateWaypoint={updateWaypoint}
-            removeWaypoint={removeWaypoint}
-          />
-        </Box>
-
-        <Stats length={distance} time={duration} ascend={ascend} />
+      <GridItem area={"nav"}>
+        <Sidepanel
+          profile={profile}
+          setProfile={setProfile}
+          waypoints={waypoints}
+          setWaypoints={setWaypoints}
+          updateWaypoint={updateWaypoint}
+          removeWaypoint={removeWaypoint}
+          distance={distance}
+          duration={duration}
+          ascend={ascend}
+        />
       </GridItem>
       <GridItem area={"main"}>
         <EditorMap
