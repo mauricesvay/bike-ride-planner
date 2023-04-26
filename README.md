@@ -32,7 +32,7 @@ Routing:
 - [ ] Import GPX track
 - [ ] Export waypoints elevation
 - [ ] Elevation visualization
-- [ ] Reverse route
+- [x] Reverse route
 
 Others:
 

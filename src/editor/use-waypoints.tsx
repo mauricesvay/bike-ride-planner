@@ -30,11 +30,18 @@ export const useWaypoints = () => {
     setWaypoints(newWaypoints);
   };
 
+  const reverseWaypoints = () => {
+    const newWaypoints = [...waypoints];
+    newWaypoints.reverse();
+    setWaypoints(newWaypoints);
+  };
+
   return {
     waypoints,
     addWaypoint,
     removeWaypoint,
     updateWaypoint,
     setWaypoints,
+    reverseWaypoints,
   };
 };

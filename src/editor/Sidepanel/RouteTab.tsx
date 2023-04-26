@@ -3,6 +3,7 @@ import { ProfileSelector } from "./ProfileSelector";
 import { Waypoints } from "./Waypoints";
 import { BrouterProfile } from "../use-brouter-route";
 import { Waypoint } from "../Waypoint.types";
+import { Button } from "@chakra-ui/react";
 
 export interface RouteTabProps {
   profile: BrouterProfile;
@@ -11,6 +12,7 @@ export interface RouteTabProps {
   setWaypoints: React.Dispatch<React.SetStateAction<Waypoint[]>>;
   updateWaypoint: (i: number, updatedWaypoint: Partial<Waypoint>) => void;
   removeWaypoint: (i: number) => void;
+  reverseWaypoints: () => void;
 }
 
 export const RouteTab = ({
@@ -20,6 +22,7 @@ export const RouteTab = ({
   setWaypoints,
   updateWaypoint,
   removeWaypoint,
+  reverseWaypoints,
 }: RouteTabProps) => {
   return (
     <>
@@ -32,6 +35,7 @@ export const RouteTab = ({
           removeWaypoint={removeWaypoint}
         />
       </Box>
+      <Button onClick={() => reverseWaypoints()}>Reverse</Button>
     </>
   );
 };

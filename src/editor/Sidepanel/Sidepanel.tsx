@@ -9,6 +9,7 @@ export const Sidepanel = ({
   setWaypoints,
   updateWaypoint,
   removeWaypoint,
+  reverseWaypoints,
   distance,
   duration,
   ascend,
@@ -28,6 +29,7 @@ export const Sidepanel = ({
             setWaypoints={setWaypoints}
             updateWaypoint={updateWaypoint}
             removeWaypoint={removeWaypoint}
+            reverseWaypoints={reverseWaypoints}
           />
         </TabPanel>
         <TabPanel>

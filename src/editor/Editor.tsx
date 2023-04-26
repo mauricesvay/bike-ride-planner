@@ -20,6 +20,7 @@ function Editor() {
     removeWaypoint,
     updateWaypoint,
     setWaypoints,
+    reverseWaypoints,
   } = useWaypoints();
 
   // Routing
@@ -94,6 +95,7 @@ function Editor() {
           setWaypoints={setWaypoints}
           updateWaypoint={updateWaypoint}
           removeWaypoint={removeWaypoint}
+          reverseWaypoints={reverseWaypoints}
           distance={distance}
           duration={duration}
           ascend={ascend}
