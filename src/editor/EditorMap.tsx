@@ -14,7 +14,8 @@ import { MyMapComponent } from "./MyMapComponent";
 import { Waypoint } from "./Waypoint.types";
 import "./editor-map.css";
 import { usePopup } from "./use-popup";
-const { BaseLayer } = LayersControl;
+import { useStravaAuth } from "./use-strava-auth";
+const { BaseLayer, Overlay } = LayersControl;
 
 function getTileLayers() {
   return [
@@ -59,6 +60,18 @@ export function EditorMap({
     closePopup,
   } = usePopup();
 
+  // Strava heatmap
+  const strava = useStravaAuth();
+  const stravaElement = strava ? (
+    <Overlay name="Strava Heatmap">
+      <TileLayer
+        url={`http://heatmap-external-b.strava.com/tiles-auth/ride/hot/{z}/{x}/{y}.png?Key-Pair-Id=${strava["Key-Pair-Id"]}&Policy=${strava.Policy}&Signature=${strava.Signature}`}
+        attribution="&copy; Strava"
+        maxZoom={15}
+      />
+    </Overlay>
+  ) : null;
+
   return (
     <MapContainer
       bounds={[
@@ -80,6 +93,7 @@ export function EditorMap({
             />
           </BaseLayer>
         ))}
+        {stravaElement}
       </LayersControl>
 
       {waypoints.map((waypoint, i) => {
