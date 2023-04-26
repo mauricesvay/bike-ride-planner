@@ -16,7 +16,7 @@ Getting started:
 
 Map:
 
-- [ ] More layer options (satellite, etc.)
+- [x] More layer options (satellite, etc.)
 - [x] Recenter map
 - [ ] POIs overlay? (water fountains, toilets, etc.)
 - [ ] Statshunters tiles overlay?

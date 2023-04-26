@@ -2,6 +2,7 @@ import { Button } from "@chakra-ui/react";
 import L, { LatLng, LatLngExpression, Marker as LeafletMarker } from "leaflet";
 import { useRef } from "react";
 import {
+  LayersControl,
   MapContainer,
   Marker,
   Polyline,
@@ -13,6 +14,27 @@ import { MyMapComponent } from "./MyMapComponent";
 import { Waypoint } from "./Waypoint.types";
 import "./editor-map.css";
 import { usePopup } from "./use-popup";
+const { BaseLayer } = LayersControl;
+
+function getTileLayers() {
+  return [
+    {
+      name: "CyclOSM",
+      url: "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+      attribution: "&copy; OpenStreetMap contributors",
+    },
+    {
+      name: "Jawg Sunny",
+      url: `https://{s}.tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=${window.BikeRidePlanner.jawg.accessToken}`,
+      attribution: "&copy; Jawg Maps &copy; OpenStreetMap contributors",
+    },
+    {
+      name: "Jawg Dark",
+      url: `https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=${window.BikeRidePlanner.jawg.accessToken}`,
+      attribution: "&copy; Jawg Maps &copy; OpenStreetMap contributors",
+    },
+  ];
+}
 
 interface EditorMapProps {
   waypoints: Waypoint[];
@@ -36,6 +58,7 @@ export function EditorMap({
     openPopup,
     closePopup,
   } = usePopup();
+
   return (
     <MapContainer
       bounds={[
@@ -44,10 +67,21 @@ export function EditorMap({
       ]}
       style={{ height: "100%" }}
     >
-      <TileLayer
-        url="https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
+      <LayersControl>
+        {getTileLayers().map((tileLayer, index) => (
+          <BaseLayer
+            checked={index === 0}
+            name={tileLayer.name}
+            key={tileLayer.name}
+          >
+            <TileLayer
+              url={tileLayer.url}
+              attribution={tileLayer.attribution}
+            />
+          </BaseLayer>
+        ))}
+      </LayersControl>
+
       {waypoints.map((waypoint, i) => {
         const icon = L.divIcon({
           className: "custom-marker",

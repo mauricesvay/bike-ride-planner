@@ -39,7 +39,7 @@ export function CenterButton({ waypoints }: { waypoints: Waypoint[] }) {
   };
 
   return (
-    <div className={POSITION_CLASSES.topright}>
+    <div className={POSITION_CLASSES.bottomleft}>
       <Button
         onClick={handleCenterMap}
         className="leaflet-control"
