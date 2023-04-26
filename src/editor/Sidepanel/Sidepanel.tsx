@@ -15,12 +15,12 @@ export const Sidepanel = ({
   ascend,
 }: RouteTabProps & StatsTabProps) => {
   return (
-    <Tabs>
-      <TabList>
+    <Tabs display="flex" flexDirection="column" height="100%">
+      <TabList flex="0 0 auto">
         <Tab>Route</Tab>
         <Tab>Stats</Tab>
       </TabList>
-      <TabPanels>
+      <TabPanels overflow="auto">
         <TabPanel>
           <RouteTab
             profile={profile}

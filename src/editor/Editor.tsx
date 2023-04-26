@@ -87,7 +87,7 @@ function Editor() {
           </Flex>
         </Flex>
       </GridItem>
-      <GridItem area={"nav"}>
+      <GridItem area={"nav"} overflow="hidden">
         <Sidepanel
           profile={profile}
           setProfile={setProfile}
