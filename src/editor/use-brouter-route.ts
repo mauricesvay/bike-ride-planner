@@ -25,7 +25,7 @@ export interface BrouterResponse {
         string,
         string,
         string
-      ];
+      ][];
       name: string;
       "plain-ascend": string;
       times: number[];
