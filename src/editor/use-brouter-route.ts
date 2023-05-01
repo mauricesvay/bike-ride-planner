@@ -71,3 +71,27 @@ export const useBrouterRoute = (
     enabled: waypoints.length > 1,
   });
 };
+
+export type AltitudeList = {
+  distance: number;
+  altitude: number;
+}[];
+
+export function getAltitudeList(data: BrouterResponse): AltitudeList {
+  const messages = data.features[0].properties.messages;
+  const altitudeList = messages.reduce((acc, cur, index) => {
+    if (index === 0) {
+      return acc;
+    }
+    const altitude = parseFloat(cur[2]);
+    const distanceFromPreviousPoint = parseFloat(cur[3]);
+    const cumulativeDistance =
+      (acc[acc.length - 1]?.distance ?? 0) + distanceFromPreviousPoint;
+    acc.push({
+      distance: cumulativeDistance,
+      altitude: altitude,
+    });
+    return acc;
+  }, [] as AltitudeList);
+  return altitudeList;
+}
