@@ -13,7 +13,7 @@ export function Stats({
 }) {
   const { t } = useTranslation();
   const formattedDistance = distance
-    ? numeral(distance / 1000).format("0.0")
+    ? numeral(distance / 1000).format("0.00")
     : "-";
   const formattedTime = duration ? numeral(duration).format("00:00:00") : "-";
   const formattedAscend = ascend ? numeral(ascend).format("0") : "-";
