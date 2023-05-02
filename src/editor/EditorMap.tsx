@@ -1,20 +1,22 @@
 import { Button } from "@chakra-ui/react";
-import L, { LatLng, LatLngExpression, Marker as LeafletMarker } from "leaflet";
-import { useRef } from "react";
+import L, { LatLng, Marker as LeafletMarker } from "leaflet";
+import max from "lodash/max";
+import min from "lodash/min";
+import { useCallback, useRef } from "react";
 import {
   LayersControl,
   MapContainer,
   Marker,
-  Polyline,
   Popup,
   TileLayer,
 } from "react-leaflet";
+import { Hotline } from "react-leaflet-hotline";
 import { CenterButton } from "./CenterButton";
-import { MyMapComponent } from "./MyMapComponent";
-import { Waypoint } from "./Waypoint.types";
 import "./editor-map.css";
+import { MyMapComponent } from "./MyMapComponent";
 import { usePopup } from "./use-popup";
 import { useStravaAuth } from "./use-strava-auth";
+import { Waypoint } from "./Waypoint.types";
 const { BaseLayer, Overlay } = LayersControl;
 
 function getTileLayers() {
@@ -39,7 +41,7 @@ function getTileLayers() {
 
 interface EditorMapProps {
   waypoints: Waypoint[];
-  lines: LatLngExpression[][];
+  lines: { lat: number; lng: number; altitude: number }[][];
   updateWaypoint: (i: number, updatedWaypoint: Partial<Waypoint>) => void;
   removeWaypoint: (i: number) => void;
   addWaypoint: (latlng: LatLng) => void;
@@ -68,9 +70,20 @@ export function EditorMap({
         url={`http://heatmap-external-b.strava.com/tiles-auth/ride/hot/{z}/{x}/{y}.png?Key-Pair-Id=${strava["Key-Pair-Id"]}&Policy=${strava.Policy}&Signature=${strava.Signature}`}
         attribution="&copy; Strava"
         maxZoom={15}
+        opacity={1}
       />
     </Overlay>
   ) : null;
+
+  // Altitude range
+  const altitudes = lines[0]?.map((p) => p.altitude) ?? [];
+  const minAltitude = min(altitudes) ?? 0;
+  const maxAltitude = max(altitudes) ?? 1;
+  const getVal = useCallback(
+    (p: { lat: number; lng: number; altitude: number }) =>
+      (p.altitude - minAltitude) / (maxAltitude - minAltitude),
+    [minAltitude, maxAltitude]
+  );
 
   return (
     <MapContainer
@@ -156,7 +169,15 @@ export function EditorMap({
       ) : null}
       <MyMapComponent addMarker={openPopup} />
       {lines.length > 0 ? (
-        <Polyline positions={lines[0]} pathOptions={{ color: "red" }} />
+        <Hotline
+          data={lines[0]}
+          getLat={(t) => {
+            return t.lat;
+          }}
+          getLng={(t) => t.lng}
+          getVal={getVal}
+          options={{ weight: 3, outlineWidth: 4, outlineColor: "#000000" }}
+        />
       ) : null}
       <CenterButton waypoints={waypoints} />
     </MapContainer>

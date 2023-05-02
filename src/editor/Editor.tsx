@@ -26,9 +26,13 @@ function Editor() {
   // Routing
   const { data } = useBrouterRoute(waypoints, profile);
   const lines =
-    data?.features.map((feature: any) =>
-      feature.geometry.coordinates.map(([lng, lat]: any) => [lat, lng])
-    ) ?? [];
+    data?.features.map((feature) => {
+      return feature.geometry.coordinates.map(([lng, lat, altitude]) => ({
+        lat,
+        lng,
+        altitude,
+      }));
+    }) ?? [];
 
   // Stats
   const properties = data?.features[0].properties;
