@@ -7,7 +7,11 @@ import { EditorMap } from "./EditorMap";
 import { getGpx, parseGpx } from "./gpx.utils";
 import { ImportButton } from "./ImportButton";
 import { Sidepanel } from "./Sidepanel/Sidepanel";
-import { BrouterProfile, useBrouterRoute } from "./use-brouter-route";
+import {
+  BrouterProfile,
+  getAltitudeList,
+  useBrouterRoute,
+} from "./use-brouter-route";
 import { useWaypoints } from "./use-waypoints";
 
 function Editor() {
@@ -39,6 +43,9 @@ function Editor() {
   const duration = parseFloat(properties?.["total-time"] ?? "0");
   const distance = parseFloat(properties?.["track-length"] ?? "0");
   const ascend = parseFloat(properties?.["filtered ascend"] ?? "0");
+
+  // Elevation
+  const altitudeList = data ? getAltitudeList(data) : [];
 
   // Export
   const handleExport = () => {
@@ -103,6 +110,7 @@ function Editor() {
           distance={distance}
           duration={duration}
           ascend={ascend}
+          altitudeList={altitudeList}
         />
       </GridItem>
       <GridItem area={"main"}>

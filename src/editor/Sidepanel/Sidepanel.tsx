@@ -13,6 +13,7 @@ export const Sidepanel = ({
   distance,
   duration,
   ascend,
+  altitudeList,
 }: RouteTabProps & StatsTabProps) => {
   return (
     <Tabs display="flex" flexDirection="column" height="100%">
@@ -33,7 +34,12 @@ export const Sidepanel = ({
           />
         </TabPanel>
         <TabPanel>
-          <StatsTab distance={distance} duration={duration} ascend={ascend} />
+          <StatsTab
+            distance={distance}
+            duration={duration}
+            ascend={ascend}
+            altitudeList={altitudeList}
+          />
         </TabPanel>
       </TabPanels>
     </Tabs>
