@@ -12,23 +12,25 @@ import {
   getAltitudeList,
   useBrouterRoute,
 } from "./use-brouter-route";
+import { useRoute } from "./use-route";
 import { useWaypoints } from "./use-waypoints";
 
 function Editor() {
   const theme = useTheme();
   const borderColor = theme.semanticTokens.colors["chakra-border-color"];
-  const [profile, setProfile] = useState<BrouterProfile>("safety");
+
   const {
+    profile,
+    setProfile,
     waypoints,
     addWaypoint,
     removeWaypoint,
     updateWaypoint,
     setWaypoints,
     reverseWaypoints,
-  } = useWaypoints();
+    route: data,
+  } = useRoute();
 
-  // Routing
-  const { data } = useBrouterRoute(waypoints, profile);
   const lines =
     data?.features.map((feature) => {
       return feature.geometry.coordinates.map(([lng, lat, altitude]) => ({

@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { Waypoint } from "./Waypoint.types";
 
+const ONE_SECOND = 1000;
+const ONE_MINUTE = ONE_SECOND * 60;
+const ONE_HOUR = ONE_MINUTE * 60;
+
 export interface BrouterResponse {
   type: "FeatureCollection";
   features: {
@@ -69,6 +73,7 @@ export const useBrouterRoute = (
     queryKey: ["brouter-route", params],
     queryFn: () => fetch(url).then((response) => response.json()),
     enabled: waypoints.length > 1,
+    staleTime: ONE_HOUR,
   });
 };
 
