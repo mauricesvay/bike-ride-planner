@@ -285,7 +285,7 @@ function douglasPeucker(
  * @returns Simplified array of points (indices of points to keep)
  */
 export function decimatePoints(
-  points: { lat: number; lon?: number; lng?: number }[],
+  points: { lat: number; lon: number; lng?: number }[],
   options: {
     /** Maximum distance error in meters for simplification */
     epsilon?: number;
