@@ -11,6 +11,7 @@ import {
   TileLayer,
 } from "react-leaflet";
 import { Hotline } from "react-leaflet-hotline";
+import { HotlineGetter } from "react-leaflet-hotline/dist/types/types";
 import { CenterButton } from "./CenterButton";
 import "./editor-map.css";
 import { MyMapComponent } from "./MyMapComponent";
@@ -79,9 +80,13 @@ export function EditorMap({
   const altitudes = lines[0]?.map((p) => p.altitude) ?? [];
   const minAltitude = min(altitudes) ?? 0;
   const maxAltitude = max(altitudes) ?? 1;
-  const getVal = useCallback(
-    (p: { lat: number; lng: number; altitude: number }) =>
-      (p.altitude - minAltitude) / (maxAltitude - minAltitude),
+  const getVal: HotlineGetter<{
+    lat: number;
+    lng: number;
+    altitude: number;
+  }> = useCallback(
+    ({ point: { altitude } }) =>
+      (altitude - minAltitude) / (maxAltitude - minAltitude),
     [minAltitude, maxAltitude]
   );
 
@@ -172,9 +177,9 @@ export function EditorMap({
         <Hotline
           data={lines[0]}
           getLat={(t) => {
-            return t.lat;
+            return t.point.lat;
           }}
-          getLng={(t) => t.lng}
+          getLng={(t) => t.point.lng}
           getVal={getVal}
           options={{ weight: 3, outlineWidth: 4, outlineColor: "#000000" }}
         />
