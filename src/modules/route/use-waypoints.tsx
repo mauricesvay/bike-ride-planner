@@ -1,6 +1,6 @@
 import { LatLng } from "leaflet";
 import { useEffect, useState } from "react";
-import { Waypoint } from "./Waypoint.types";
+import { Waypoint } from "../../editor/Waypoint.types";
 
 export const useWaypoints = () => {
   const initialMarkers = JSON.parse(

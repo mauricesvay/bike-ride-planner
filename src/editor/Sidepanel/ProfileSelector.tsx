@@ -1,5 +1,5 @@
 import { Select } from "@chakra-ui/react";
-import { BrouterProfile, isBrouterProfile } from "../use-brouter-route";
+import { BrouterProfile, isBrouterProfile } from "../../modules/router/use-brouter-route";
 
 const availableProfiles = {
   safety: "Itinéraire sécurisé",

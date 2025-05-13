@@ -4,16 +4,16 @@ import { saveAs } from "file-saver";
 import { t } from "i18next";
 import { useState } from "react";
 import { EditorMap } from "./EditorMap";
-import { getGpx, parseGpx } from "./gpx.utils";
+import { getGpx, parseGpx } from "../modules/gpx/gpx.utils";
 import { ImportButton } from "./ImportButton";
 import { Sidepanel } from "./Sidepanel/Sidepanel";
 import {
   BrouterProfile,
   getAltitudeList,
   useBrouterRoute,
-} from "./use-brouter-route";
-import { useRoute } from "./use-route";
-import { useWaypoints } from "./use-waypoints";
+} from "../modules/router/use-brouter-route";
+import { useRoute } from "../modules/route/use-route";
+import { useWaypoints } from "../modules/route/use-waypoints";
 
 function Editor() {
   const theme = useTheme();

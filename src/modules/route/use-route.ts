@@ -5,7 +5,7 @@ import {
   BrouterResponse,
   isBrouterProfile,
   useBrouterRoute,
-} from "./use-brouter-route";
+} from "../router/use-brouter-route";
 import { useWaypoints } from "./use-waypoints";
 
 export const useRoute = () => {

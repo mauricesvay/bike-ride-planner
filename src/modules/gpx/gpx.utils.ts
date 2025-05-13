@@ -1,8 +1,8 @@
 import { BaseBuilder, buildGPX } from "gpx-builder";
 import { Point } from "gpx-builder/dist/builder/BaseBuilder/models";
 import gpxParser from "gpxparser";
-import { Waypoint } from "./Waypoint.types";
-import { BrouterResponse } from "./use-brouter-route";
+import { Waypoint } from "../../editor/Waypoint.types";
+import { BrouterResponse } from "../router/use-brouter-route";
 import { LatLng } from "leaflet";
 
 export function getGpx(

@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import { ProfileSelector } from "./ProfileSelector";
 import { Waypoints } from "./Waypoints";
-import { BrouterProfile } from "../use-brouter-route";
+import { BrouterProfile } from "../../modules/router/use-brouter-route";
 import { Waypoint } from "../Waypoint.types";
 import { Button } from "@chakra-ui/react";
 

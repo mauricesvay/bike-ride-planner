@@ -1,4 +1,4 @@
-import { AltitudeList } from "../use-brouter-route";
+import { AltitudeList } from "../../modules/router/use-brouter-route";
 import { ElevationViz } from "./ElevationViz";
 import { Stats } from "./Stats";
 

@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 import numeral from "numeral";
 import { Line } from "react-chartjs-2";
-import { AltitudeList } from "../use-brouter-route";
+import { AltitudeList } from "../../modules/router/use-brouter-route";
 
 ChartJS.register(
   CategoryScale,

@@ -16,7 +16,7 @@ import { CenterButton } from "./CenterButton";
 import "./editor-map.css";
 import { MyMapComponent } from "./MyMapComponent";
 import { usePopup } from "./use-popup";
-import { useStravaAuth } from "./use-strava-auth";
+import { useStravaAuth } from "../modules/strava/use-strava-auth";
 import { Waypoint } from "./Waypoint.types";
 const { BaseLayer, Overlay } = LayersControl;
 

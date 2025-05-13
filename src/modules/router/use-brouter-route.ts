@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Waypoint } from "./Waypoint.types";
+import { Waypoint } from "../../editor/Waypoint.types";
 
 const ONE_SECOND = 1000;
 const ONE_MINUTE = ONE_SECOND * 60;
