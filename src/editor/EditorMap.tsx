@@ -14,11 +14,11 @@ import { Hotline } from "react-leaflet-hotline";
 import { HotlineGetter } from "react-leaflet-hotline/dist/types/types";
 import { CenterButton } from "./CenterButton";
 import "./editor-map.css";
+import { Heatmap } from "./Heatmap";
 import { MyMapComponent } from "./MyMapComponent";
 import { usePopup } from "./use-popup";
-import { useStravaAuth } from "../modules/strava/use-strava-auth";
 import { Waypoint } from "./Waypoint.types";
-const { BaseLayer, Overlay } = LayersControl;
+const { BaseLayer } = LayersControl;
 
 function getTileLayers() {
   return [
@@ -63,19 +63,6 @@ export function EditorMap({
     closePopup,
   } = usePopup();
 
-  // Strava heatmap
-  const strava = useStravaAuth();
-  const stravaElement = strava ? (
-    <Overlay name="Strava Heatmap">
-      <TileLayer
-        url={`http://heatmap-external-b.strava.com/tiles-auth/ride/hot/{z}/{x}/{y}.png?Key-Pair-Id=${strava["Key-Pair-Id"]}&Policy=${strava.Policy}&Signature=${strava.Signature}`}
-        attribution="&copy; Strava"
-        maxZoom={15}
-        opacity={1}
-      />
-    </Overlay>
-  ) : null;
-
   // Altitude range
   const altitudes = lines[0]?.map((p) => p.altitude) ?? [];
   const minAltitude = min(altitudes) ?? 0;
@@ -111,7 +98,7 @@ export function EditorMap({
             />
           </BaseLayer>
         ))}
-        {stravaElement}
+        <Heatmap />
       </LayersControl>
 
       {waypoints.map((waypoint, i) => {
