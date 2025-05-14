@@ -2,18 +2,14 @@ import { Grid, GridItem } from "@chakra-ui/layout";
 import { Button, Flex, Heading, useTheme } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
 import { t } from "i18next";
-import { useState } from "react";
-import { EditorMap } from "./EditorMap";
 import { getGpx, parseGpx } from "../modules/gpx/gpx.utils";
+import { useRoute } from "../modules/route/use-route";
+import {
+  getAltitudeList
+} from "../modules/router/use-brouter-route";
+import { EditorMap } from "./EditorMap";
 import { ImportButton } from "./ImportButton";
 import { Sidepanel } from "./Sidepanel/Sidepanel";
-import {
-  BrouterProfile,
-  getAltitudeList,
-  useBrouterRoute,
-} from "../modules/router/use-brouter-route";
-import { useRoute } from "../modules/route/use-route";
-import { useWaypoints } from "../modules/route/use-waypoints";
 
 function Editor() {
   const theme = useTheme();
