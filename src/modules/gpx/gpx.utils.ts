@@ -127,7 +127,6 @@ export function parseGpx(gpxString: string) {
       lng: lon,
     } as LatLng,
   }));
-  console.log(gpx);
 
   const trackPoints = gpx.tracks[0]?.points || [];
   const significantWaypoints = extractWaypointsFromTrack(trackPoints, 30).map(
