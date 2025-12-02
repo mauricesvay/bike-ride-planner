@@ -45,6 +45,10 @@ function Editor() {
   // Elevation
   const altitudeList = data ? getAltitudeList(data) : [];
 
+  const handleNew = () => {
+    setWaypoints([]);
+  }
+
   // Export
   const handleExport = () => {
     if (data) {
@@ -91,6 +95,7 @@ function Editor() {
         <Flex justify="space-between" p={2} align="center">
           <Heading size="md">Bike Ride Planner</Heading>
           <Flex gap={2}>
+            <Button onClick={() => handleNew()}>New</Button>
             <ImportButton onFileSelected={handleImport} />
             <Button onClick={() => handleExport()}>Export GPX</Button>
           </Flex>
