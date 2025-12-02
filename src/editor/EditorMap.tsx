@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, HStack, VStack } from "@chakra-ui/react";
 import L, { LatLng, Marker as LeafletMarker } from "leaflet";
 import max from "lodash/max";
 import min from "lodash/min";
@@ -46,6 +46,7 @@ interface EditorMapProps {
   updateWaypoint: (i: number, updatedWaypoint: Partial<Waypoint>) => void;
   removeWaypoint: (i: number) => void;
   addWaypoint: (latlng: LatLng) => void;
+  insertWaypoint?: (i: number, latlng: LatLng) => void;
 }
 
 export function EditorMap({
@@ -54,6 +55,7 @@ export function EditorMap({
   updateWaypoint,
   removeWaypoint,
   addWaypoint,
+  insertWaypoint,
 }: EditorMapProps) {
   const markerRef = useRef<LeafletMarker[]>([]);
   const {
@@ -62,6 +64,50 @@ export function EditorMap({
     openPopup,
     closePopup,
   } = usePopup();
+
+  // Find the best position to insert a new waypoint
+  const findBestInsertPosition = (newLatlng: LatLng): number => {
+    if (waypoints.length === 0) return 0;
+    if (waypoints.length === 1) return 1;
+
+    let bestIndex = 1;
+    let minDeviation = Infinity;
+
+    // Try inserting only between existing waypoints (not at endpoints)
+    for (let i = 1; i < waypoints.length; i++) {
+      const p1 = waypoints[i - 1].latlng;
+      const p2 = waypoints[i].latlng;
+      const p = newLatlng;
+
+      // Ensure all are LatLng objects
+      const point1 =
+        p1 instanceof L.LatLng
+          ? p1
+          : new L.LatLng((p1 as any).lat, (p1 as any).lng);
+      const point2 =
+        p2 instanceof L.LatLng
+          ? p2
+          : new L.LatLng((p2 as any).lat, (p2 as any).lng);
+      const point =
+        p instanceof L.LatLng
+          ? p
+          : new L.LatLng((p as any).lat, (p as any).lng);
+
+      // Calculate the direct distance between the two waypoints
+      const directDistance = point1.distanceTo(point2);
+
+      // Calculate the detour distance: distance via new point minus direct distance
+      const detourDistance =
+        point1.distanceTo(point) + point.distanceTo(point2) - directDistance;
+
+      if (detourDistance < minDeviation) {
+        minDeviation = detourDistance;
+        bestIndex = i;
+      }
+    }
+
+    return bestIndex;
+  };
 
   // Altitude range
   const altitudes = lines[0]?.map((p) => p.altitude) ?? [];
@@ -148,14 +194,53 @@ export function EditorMap({
               Delete
             </Button>
           ) : (
-            <Button
-              onClick={(e) => {
-                addWaypoint(popupPosition);
-                closePopup();
-              }}
-            >
-              Add a point
-            </Button>
+            <VStack spacing={2} align="stretch">
+              <Button
+                onClick={() => {
+                  if (insertWaypoint) {
+                    insertWaypoint(0, popupPosition);
+                  } else {
+                    const newWaypoints = [
+                      { latlng: popupPosition, label: "" },
+                      ...waypoints,
+                    ];
+                  }
+                  closePopup();
+                }}
+                colorScheme="green"
+              >
+                Start point
+              </Button>
+              <Button
+                onClick={() => {
+                  const insertIndex = findBestInsertPosition(popupPosition);
+                  if (insertWaypoint) {
+                    insertWaypoint(insertIndex, popupPosition);
+                  } else {
+                    // Fallback: insert locally if insertWaypoint not provided
+                    const newWaypoints = [...waypoints];
+                    newWaypoints.splice(insertIndex, 0, {
+                      latlng: popupPosition,
+                      label: "",
+                    });
+                  }
+                  closePopup();
+                }}
+                size="sm"
+                disabled={waypoints.length < 2}
+              >
+                Insert point
+              </Button>
+              <Button
+                onClick={() => {
+                  addWaypoint(popupPosition);
+                  closePopup();
+                }}
+                colorScheme="red"
+              >
+                End point
+              </Button>
+            </VStack>
           )}
         </Popup>
       ) : null}

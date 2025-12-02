@@ -27,6 +27,7 @@ export const useRoute = () => {
     addWaypoint,
     removeWaypoint,
     updateWaypoint,
+    insertWaypoint,
     setWaypoints,
     reverseWaypoints,
   } = useWaypoints();
@@ -45,6 +46,7 @@ export const useRoute = () => {
     addWaypoint,
     removeWaypoint,
     updateWaypoint,
+    insertWaypoint,
     setWaypoints,
     reverseWaypoints,
     route,

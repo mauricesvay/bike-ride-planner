@@ -30,6 +30,12 @@ export const useWaypoints = () => {
     setWaypoints(newWaypoints);
   };
 
+  const insertWaypoint = (i: number, latlng: LatLng) => {
+    const newWaypoints = [...waypoints];
+    newWaypoints.splice(i, 0, { latlng, label: "" });
+    setWaypoints(newWaypoints);
+  };
+
   const reverseWaypoints = () => {
     const newWaypoints = [...waypoints];
     newWaypoints.reverse();
@@ -41,6 +47,7 @@ export const useWaypoints = () => {
     addWaypoint,
     removeWaypoint,
     updateWaypoint,
+    insertWaypoint,
     setWaypoints,
     reverseWaypoints,
   };

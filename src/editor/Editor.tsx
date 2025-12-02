@@ -22,6 +22,7 @@ function Editor() {
     addWaypoint,
     removeWaypoint,
     updateWaypoint,
+    insertWaypoint,
     setWaypoints,
     reverseWaypoints,
     route: data,
@@ -122,6 +123,7 @@ function Editor() {
           updateWaypoint={updateWaypoint}
           removeWaypoint={removeWaypoint}
           addWaypoint={addWaypoint}
+          insertWaypoint={insertWaypoint}
           lines={lines}
         />
       </GridItem>
